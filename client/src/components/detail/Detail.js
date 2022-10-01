@@ -31,9 +31,11 @@ function Detail ({ index, setIndex, questions }) {
             fetch(`/list/${index}`)
             .then(res => res.json())
             .then(data => {
-                setQuestion(data.question);
-                getBookMark(data.question);
-                setIndex(data.question._id)
+                if (data.question != null) {
+                    setQuestion(data.question);
+                    getBookMark(data.question);
+                    setIndex(data.question._id)
+                }
                 setIsLoading(false);
             });
         }
@@ -85,18 +87,20 @@ function Detail ({ index, setIndex, questions }) {
     }
 
     const bookMarkToggle = () => {
-        
-        if (isbookMark) {
-            const index = bookMarkList.findIndex(data => data.id === question._id);
-            bookMarkList.splice(index, 1);
-        } else {
-            bookMarkList.push({id : question._id, answer : question.answer});
+        if (question._id !== undefined) {
+            if (isbookMark) {
+                const index = bookMarkList.findIndex(data => data.id === question._id);
+                bookMarkList.splice(index, 1);
+            } else {
+                bookMarkList.push({id : question._id, answer : question.answer});
+            }
+            bookMarkList.sort((a, b) => a.id - b.id);
+            setBookMarkList([...new Set(bookMarkList)]);
+            localStorage.setItem("bookMark", JSON.stringify(bookMarkList));
+    
+            setIsBookMark(!isbookMark);
         }
-        bookMarkList.sort((a, b) => a.id - b.id);
-        setBookMarkList([...new Set(bookMarkList)]);
-        localStorage.setItem("bookMark", JSON.stringify(bookMarkList));
 
-        setIsBookMark(!isbookMark);
     }
 
     return (
@@ -125,11 +129,13 @@ function Detail ({ index, setIndex, questions }) {
                 }
 
                 <hr />
-            
+           
                 <Textarea className={styles.title} value={question.title} readOnly disabled/>
                 <Textarea value={question.content} readOnly disabled/>
                 <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
                 <Textarea className={styles.border} style={{visibility : isAnswer ? "" : "hidden"}} value={question.answer} readOnly disabled/>
+                
+  
             </div>
 
             <List component="nav"  

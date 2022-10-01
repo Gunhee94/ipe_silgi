@@ -70,6 +70,11 @@ function Manage() {
             </div>
 
             {
+                questions.length == 0 ? 
+                    <div className="box" >
+                        문제를 등록해주세요
+                    </div>
+                :
                 questions.map((data) => 
                     <div className="box" key={data._id} onClick={() => {getQuestion(data._id)}}>
                         {data.answer}

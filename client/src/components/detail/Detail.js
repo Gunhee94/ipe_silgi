@@ -8,6 +8,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import Textarea from '@mui/joy/Textarea';
 import { useEffect, useState } from 'react';
 
 function Detail ({ index, setIndex, questions }) {
@@ -125,18 +126,10 @@ function Detail ({ index, setIndex, questions }) {
 
                 <hr />
             
-                <div className={styles.title}>
-                    {question.title}
-                </div>
-                <div>
-                    {question.content}
-                </div>
-                <div>
-                    <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
-                </div>
-                <div className={isAnswer ? "" : styles.hidden}>
-                    {question.answer}
-                </div>
+                <Textarea className={styles.title} value={question.title} readOnly disabled/>
+                <Textarea value={question.content} readOnly disabled/>
+                <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
+                <Textarea className={styles.border} style={{visibility : isAnswer ? "" : "hidden"}} value={question.answer} readOnly disabled/>
             </div>
 
             <List component="nav"  

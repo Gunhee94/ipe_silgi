@@ -19,13 +19,14 @@
 
 .detail .title {
     font-weight: bold;
+    border: none;
 }
 
 .detail div {
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.hidden {
-    visibility: hidden;
+.detail .border {
+    border: none;
 }
-

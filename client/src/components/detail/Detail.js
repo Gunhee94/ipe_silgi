@@ -4,40 +4,39 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import StarIcon from '@mui/icons-material/Star';
 import Button from '@mui/material/Button';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 import { useEffect, useState } from 'react';
 
-function Detail ({ index, setIndex }) {
+function Detail ({ index, setIndex, questions }) {
 
-    const [count, setCount] = useState(0);
     const [question, setQuestion] = useState({});    
     const [isAnswer, setIsAnswer] = useState(false);
     const [bookMarkList, setBookMarkList] = useState([]);
     const [isbookMark, setIsBookMark] = useState(false);
-    const [bookFilter, setBookFilter] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
   
     useEffect(() => {
         
         setIsAnswer(false);
-        getCountQuestions();
         getQuestion();
 
     }, [index])
 
-    const getCountQuestions = () => {
-        fetch("/count")
-        .then(res => res.json())
-        .then(data => setCount(data.count));
-    }
-
     const getQuestion = () => {
-        fetch(`/list/${index}`)
-        .then(res => res.json())
-        .then(data => {
-            setQuestion(data.question);
-            getBookMark(data.question);  
-        });
+        if (!isLoading) {
+            fetch(`/list/${index}`)
+            .then(res => res.json())
+            .then(data => {
+                setQuestion(data.question);
+                getBookMark(data.question);
+                setIndex(data.question._id)
+                setIsLoading(false);
+            });
+        }
+
     }
 
     const getBookMark = (question) => {
@@ -47,102 +46,82 @@ function Detail ({ index, setIndex }) {
           localStorage.setItem('bookMark', JSON.stringify([]));
         } else {
             setBookMarkList(bookMark);
-            const data = bookMark.find(data => data === question._id);
+            const data = bookMark.find(data => data.id === question._id);
             data !== undefined ? setIsBookMark(true) : setIsBookMark(false);
         }
     }
 
     const downPage = () => {
-        //setIsAnswer(false);
-
-        console.log(index, bookMarkList[index], "인덱스")
 
         let result;
-        for (let i=bookMarkList.length; i>0; i--) {
-            if (index == bookMarkList[i]) {
-                result = bookMarkList[i-1]
+        for (let i=0; i<questions.length; i++) {
+            if (index == questions[i]._id) {
+                if (questions[i-1] === undefined) {
+                    alert("첫 페이지 입니다.")
+                } else {
+                    result = questions[i-1]._id
+                    setIndex(result)
+                }
             }
-        }
-        console.log(result, "결과")
+        }  
 
-        if (bookFilter) {
-            index - 1 > 0 ? setIndex(result) : alert("첫 페이지 입니다.");
-        } else {
-            index - 1 > 0 ? setIndex(index - 1) : alert("첫 페이지 입니다.");
-
-        }
-        //로컬스토리지에 있는 아이디로 셋인덱스 해주기 
     } 
     
     const upPage = () => {
-        //setIsAnswer(false);
-
-        console.log(index, bookMarkList[index], "인덱스")
 
         let result;
-        for (let i=0; i<bookMarkList.length; i++) {
-            if (index == bookMarkList[i]) {
-                result = bookMarkList[i+1]
+        for (let i=0; i<questions.length; i++) {
+            if (index == questions[i]._id) {
+                if (questions[i+1] === undefined) {
+                    alert("마지막 페이지 입니다.")
+                } else {
+                    result = questions[i+1]._id
+                    setIndex(result)
+                }
             }
-        }
-        console.log(result, "결과")
-
-        if (bookFilter) {
-            index != bookMarkList.length ? setIndex(result) : alert("마지막 페이지 입니다.");
-        } else {
-            index != count ? setIndex(index + 1) : alert("마지막 페이지 입니다.");
-        }
-    }
-
-    const answerToggle = () => {
-        setIsAnswer(!isAnswer);
+        }    
+            
     }
 
     const bookMarkToggle = () => {
         
         if (isbookMark) {
-            const index = bookMarkList.findIndex(data => data === question._id);
+            const index = bookMarkList.findIndex(data => data.id === question._id);
             bookMarkList.splice(index, 1);
         } else {
-            bookMarkList.push(question._id);
+            bookMarkList.push({id : question._id, answer : question.answer});
         }
-        bookMarkList.sort();
+        bookMarkList.sort((a, b) => a - b);
         setBookMarkList([...new Set(bookMarkList)]);
         localStorage.setItem("bookMark", JSON.stringify(bookMarkList));
 
         setIsBookMark(!isbookMark);
     }
 
-    const bookFilterToggle = () => {
-        setBookFilter(!bookFilter);
-
-        if (!bookFilter == true) {
-            setIndex(bookMarkList[0]);
-        }
-
-    }
-
     return (
         <div className='container'>
-            <div className='filter'>
-                <IconButton onClick={bookFilterToggle} size='small'>
-                    {
-                        bookFilter ? <FilterAltIcon/> : <FilterAltOffIcon/>
-                    }
-                    즐겨찾기
-                </IconButton>
-            </div>
 
             <div className={styles.detail}>
-                <IconButton className={styles.left} onClick={downPage}>
-                    <ArrowBackIosNewIcon/>
-                </IconButton>
+                {
+                    isLoading ?
+                    <IconButton className={styles.side}/>
+                    :
+                    <IconButton className={styles.side} onClick={downPage}>
+                        <ArrowBackIosNewIcon/>
+                    </IconButton>
+                }
+                
                 <IconButton className={styles.center} onClick={bookMarkToggle}>
                     <StarIcon style={{color : isbookMark ? "rgb(250, 175, 0)" : ""}}/>
                 </IconButton>
-                <IconButton className={styles.right} onClick={upPage}>
-                    <ArrowForwardIosIcon/>
-                </IconButton>
+                {
+                    isLoading ?
+                    <IconButton className={styles.side}/>
+                    :
+                    <IconButton className={styles.side} onClick={upPage}>
+                        <ArrowForwardIosIcon/>
+                    </IconButton>
+                }
 
                 <hr />
             
@@ -153,12 +132,41 @@ function Detail ({ index, setIndex }) {
                     {question.content}
                 </div>
                 <div>
-                    <Button variant="contained" onClick={answerToggle}>정답보기</Button>
+                    <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
                 </div>
                 <div className={isAnswer ? "" : styles.hidden}>
                     {question.answer}
                 </div>
             </div>
+
+            <List component="nav"  
+                sx={{
+                    width: '100%',
+                    maxWidth: 200,
+                    bgcolor: 'background.paper',
+                    position: 'relative',
+                    overflow: 'auto',
+                    maxHeight: 300
+                }}
+                subheader={
+                    <ListSubheader component="div">
+                    북마크목록
+                    </ListSubheader>
+                }
+            >
+
+            {
+                bookMarkList.map(data => 
+                    <ListItemButton
+                        onClick={() => setIndex(data.id)}
+                        key={data.id}
+                    >
+                        <ListItemText className={styles.bookMark}  primary={data.answer} />
+                    </ListItemButton>
+                )
+            }
+
+            </List>
 
         </div>
     )

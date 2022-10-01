@@ -2,20 +2,19 @@
     border: 1px solid black;
     width: 70%;
     margin: auto;
+    margin-left: 7%;
     padding: 20px;
     text-align:left;
+    float:left;
 }
 
-.left {
+.side {
     width:25%;
 }
 
 .center {
     width:50%;
-}
-
-.right {
-    width:25%;
+    float: center;
 }
 
 .detail .title {
@@ -27,5 +26,12 @@
 }
 
 .hidden {
-    visibility  : hidden;
+    visibility: hidden;
+}
+
+.bookMark {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    height : 20px;
 }

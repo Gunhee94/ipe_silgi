@@ -7,7 +7,7 @@ import TextField from '@mui/joy/TextField';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -49,27 +49,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchModal({ setIndex }) {
+function SearchModal({ setIndex, questions }) {
 
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
-  const [questions, setQuestions] = useState([]);
   const [filterData, setFilterData] = useState([]);
   
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getQuestions();
-
-  }, [])
-
-  const getQuestions = () => {
-    fetch("/list")
-    .then(res => res.json())
-    .then(data => {
-        setQuestions(data.questions);
-    });
-  }
 
   const searchQuestion = (e) => {
     const filtered = questions.filter(data => {

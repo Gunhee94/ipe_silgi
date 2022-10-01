@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +13,20 @@ function App() {
 
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    getQuestions();
+
+  }, [])
+
+  const getQuestions = () => {
+    fetch("/list")
+    .then(res => res.json())
+    .then(data => {
+        setQuestions(data.questions);
+    });
+  }
 
   return (
 
@@ -28,14 +42,14 @@ function App() {
               문제관리
             </Typography>
 
-            <SearchModal setIndex={setIndex}/>
+            <SearchModal setIndex={setIndex} questions={questions}/>
 
           </Toolbar>
         </AppBar>
       </Box>
 
       <Routes>
-        <Route path='/' element={ <Detail index={index} setIndex={setIndex} /> }/>
+        <Route path='/' element={ <Detail index={index} setIndex={setIndex} questions={questions} /> }/>
         <Route path='/manage' element={ <Manage /> }/>
         <Route path='*' element={ <div></div> }/>
       </Routes>

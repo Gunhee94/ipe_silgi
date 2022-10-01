@@ -86,7 +86,11 @@ app.put('/update', (req,res) => {
 app.delete('/delete/:id', (req, res) => {
     db.collection("questions").deleteOne({_id : Number(req.params.id)}, (error, result) => {
         if(error) {return console.log(error)}
-        res.send("success");
+
+        db.collection("count").updateOne({name : "게시물갯수"}, { $inc : {totalPost : -1}}, (error, result) => {
+            if(error) {return console.log(error)}
+            res.send("success");
+        }) 
     })
 })
 

@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -54,17 +55,19 @@ function SearchModal({ setIndex, questions }) {
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  
+
   const navigate = useNavigate();
 
   const searchQuestion = (e) => {
-    const filtered = questions.filter(data => {
-      return data.answer.toUpperCase().includes(e.target.value.toUpperCase())
-    });
-    setFilterData(filtered);
+    if ("" != e.target.value) {
+      const filtered = questions.filter(data => {
+        return data.answer.toUpperCase().includes(e.target.value.toUpperCase())
+      });
+      setFilterData(filtered);
+    }
   }
 
-  const handleListItemClick = (e, index) => {
+  const handleListItemClick = (index) => {
     setSelectedIndex(index);
     setIndex(index);
     navigate("/");
@@ -87,7 +90,7 @@ function SearchModal({ setIndex, questions }) {
 
       <Modal open={open} onClose={() => {setOpen(false)}}>
         <Box className="modal">
-          <TextField placeholder="Search anything…" onChange={(e) => {searchQuestion(e)}} />
+          <TextField placeholder="Search anything…" onChange={(e) => {searchQuestion(e)}} autoFocus />
 
           <List component="nav" 
                 sx={{
@@ -103,10 +106,10 @@ function SearchModal({ setIndex, questions }) {
               filterData.map(data => 
                 <ListItemButton
                   selected={selectedIndex === data._id}
-                  onClick={(e) => handleListItemClick(e, data._id)}
+                  onClick={(e) => handleListItemClick(data._id)}
                   key={data._id}
                 >
-                  <ListItemText primary={data.answer} />
+                  <ListItemText className="bookMark" primary={data.answer} />
                 </ListItemButton>
               )
             }

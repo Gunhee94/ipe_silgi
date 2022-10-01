@@ -14,6 +14,10 @@
   text-align:right;
 }
 
+.filter div {
+  padding-right: 10px;
+}
+
 .modal {
   position: absolute;
   top: 50%;
@@ -24,6 +28,8 @@
   border: 1px solid #000;
   box-shadow: 24;
   padding: 20px;
+  max-height: 450px;
+  overflow: auto
 }
 
 .btn {
@@ -42,4 +48,11 @@
 
 .box:hover {
   box-shadow: 1px 1px 20px #ddd;
+}
+
+.bookMark {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space:nowrap;
+  height : 20px;
 }

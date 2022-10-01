@@ -91,7 +91,7 @@ function Detail ({ index, setIndex, questions }) {
         } else {
             bookMarkList.push({id : question._id, answer : question.answer});
         }
-        bookMarkList.sort((a, b) => a - b);
+        bookMarkList.sort((a, b) => a.id - b.id);
         setBookMarkList([...new Set(bookMarkList)]);
         localStorage.setItem("bookMark", JSON.stringify(bookMarkList));
 
@@ -161,7 +161,7 @@ function Detail ({ index, setIndex, questions }) {
                         onClick={() => setIndex(data.id)}
                         key={data.id}
                     >
-                        <ListItemText className={styles.bookMark}  primary={data.answer} />
+                        <ListItemText className="bookMark"  primary={data.answer} />
                     </ListItemButton>
                 )
             }

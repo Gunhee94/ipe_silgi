@@ -22,6 +22,24 @@ function ManagerModal({ open, setOpen, question, setQuestion, getQuestions }) {
         setQuestion(newQuestion);
     }
 
+    const fnIsValid = () => {
+
+        if (question.title !== undefined && question.title != "" &&
+            question.content !== undefined && question.content != "" &&
+            question.answer !== undefined && question.answer != "") {
+   
+            if (question._id === undefined) {
+                addQuestion();
+            } else {
+                updateQuestion();
+            }
+
+        } else {
+            alert("내용을 입력해주세요.")
+        }
+
+    }
+
     const addQuestion = () => {
 
         fetch(`/add`, {
@@ -39,6 +57,7 @@ function ManagerModal({ open, setOpen, question, setQuestion, getQuestions }) {
                 getQuestions();
             }
         })
+        
     }
 
     const updateQuestion = () => {
@@ -103,10 +122,10 @@ function ManagerModal({ open, setOpen, question, setQuestion, getQuestions }) {
 
                 {
                     question._id === undefined ?
-                        <Button variant="contained" className="btn" onClick={addQuestion}>확인</Button>
+                        <Button variant="contained" className="btn" onClick={fnIsValid}>확인</Button>
                     :
                     <>
-                        <Button variant="contained" className="btn" onClick={updateQuestion} >수정</Button>
+                        <Button variant="contained" className="btn" onClick={fnIsValid} >수정</Button>
                         <Button variant="contained" className="btn" style={{marginRight:"5px"}} onClick={delQuestion} color="error">삭제</Button>
                     </>
                 }

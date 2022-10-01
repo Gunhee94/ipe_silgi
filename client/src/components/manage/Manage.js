@@ -1,4 +1,6 @@
 import Button from '@mui/material/Button';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useEffect, useState } from 'react';
 import ManagerModal from '../managerModal/ManagerModal';
 
@@ -7,6 +9,7 @@ function Manage() {
     const [questions, setQuestions] = useState([]);
     const [open, setOpen] = useState(false);
     const [question, setQuestion] = useState({});
+    const [alignment, setAlignment] = useState("basic");
 
     useEffect(() => {
         getQuestions();
@@ -34,10 +37,36 @@ function Manage() {
 
     }
 
+    const handleChange = (e) => {
+   
+        if (e.target.value == "basic") {
+            questions.sort((a, b) => a._id - b._id);
+        } else if (e.target.value == "abc") {
+            questions.sort((a, b) => a.answer.localeCompare(b.answer));
+        } else if (e.target.value == "new") {
+            questions.sort((a, b) => b._id - a._id);
+        }
+
+        setAlignment(e.target.value);
+        setQuestion(questions)
+    };
+
     return (
         <div className='container'>
+
             <div className='filter'>
-              <Button variant="contained" onClick={() => {getQuestion()}}>문제등록</Button>
+                <ToggleButtonGroup
+                    color="primary"
+                    value={alignment}
+                    exclusive
+                    onChange={(e) => {handleChange(e)}}
+                >
+                    <ToggleButton value="basic">기본순</ToggleButton>
+                    <ToggleButton value="abc">가나다순</ToggleButton>
+                    <ToggleButton value="new">새로운문제순</ToggleButton>
+                </ToggleButtonGroup>
+
+                <Button variant="contained" onClick={() => {getQuestion()}}>문제등록</Button>
             </div>
 
             {

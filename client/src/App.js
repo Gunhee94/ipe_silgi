@@ -35,14 +35,15 @@ function App() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ mr: 3 }} onClick={()=> {navigate('/')}}>
-              정처기실기
+            <Typography variant="h6" component="div" sx={{ mr: 3, cursor: "pointer" }} onClick={()=> {navigate('/')}}>
+              문제
             </Typography>
-            <Typography variant="h7" component="div" sx={{ flexGrow: 1 }} onClick={()=> {navigate('/manage')}}>
+            <Typography variant="h7" component="div" sx={{ flexGrow: 1, cursor: "pointer" }} onClick={()=> {navigate('/manage')}}>
               문제관리
             </Typography>
-
+          
             <SearchModal setIndex={setIndex} questions={questions}/>
+        
 
           </Toolbar>
         </AppBar>

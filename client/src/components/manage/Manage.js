@@ -57,6 +57,7 @@ function Manage() {
             <div className='filter'>
                 <ToggleButtonGroup
                     color="primary"
+                    size='small'
                     value={alignment}
                     exclusive
                     onChange={(e) => {handleChange(e)}}

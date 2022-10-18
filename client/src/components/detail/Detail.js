@@ -4,12 +4,24 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import StarIcon from '@mui/icons-material/Star';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import Textarea from '@mui/joy/Textarea';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Container from '@mui/material/Container';
 import { useEffect, useState } from 'react';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
 
 function Detail ({ index, setIndex, questions }) {
 
@@ -23,11 +35,11 @@ function Detail ({ index, setIndex, questions }) {
         
         setIsAnswer(false);
         getQuestion();
-
     }, [index])
 
     const getQuestion = () => {
         if (!isLoading) {
+            setIsLoading(true);
             fetch(`/list/${index}`)
             .then(res => res.json())
             .then(data => {
@@ -104,70 +116,74 @@ function Detail ({ index, setIndex, questions }) {
     }
 
     return (
-        <div className='container'>
+        <Container>
 
-            <div className={styles.detail}>
-                {
-                    isLoading ?
-                    <IconButton className={styles.side}/>
-                    :
-                    <IconButton className={styles.side} onClick={downPage}>
-                        <ArrowBackIosNewIcon/>
-                    </IconButton>
-                }
-                
-                <IconButton className={styles.center} onClick={bookMarkToggle}>
-                    <StarIcon style={{color : isbookMark ? "rgb(250, 175, 0)" : ""}}/>
-                </IconButton>
-                {
-                    isLoading ?
-                    <IconButton className={styles.side}/>
-                    :
-                    <IconButton className={styles.side} onClick={upPage}>
-                        <ArrowForwardIosIcon/>
-                    </IconButton>
-                }
-
-                <hr />
-           
-                <Textarea className={styles.title} value={question.title} readOnly disabled/>
-                <Textarea value={question.content} readOnly disabled/>
-                <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
-                <Textarea className={styles.border} style={{visibility : isAnswer ? "" : "hidden"}} value={question.answer} readOnly disabled/>
-                
-  
+            <div className='filter'>
+                <FormControl sx={{ minWidth: 200 }}>
+                    <InputLabel>북마크목록</InputLabel>
+                    <Select label="북마크목록" MenuProps={MenuProps} value={''}
+                    >
+                        {
+                            bookMarkList.map(data => 
+                                <MenuItem 
+                                    onClick={() => setIndex(data.id)}
+                                    key={data.id}
+                                    value={data.id}
+                                >
+                                    {data.answer}
+                                </MenuItem>
+                            )
+                        }
+                    </Select>
+                </FormControl>
             </div>
 
-            <List component="nav"  
-                sx={{
-                    width: '100%',
-                    maxWidth: 200,
-                    bgcolor: 'background.paper',
-                    position: 'relative',
-                    overflow: 'auto',
-                    maxHeight: 300
-                }}
-                subheader={
-                    <ListSubheader component="div">
-                    북마크목록
-                    </ListSubheader>
-                }
-            >
+                <div className={styles.detail}>
+                    
+                    <div className={styles.top}>
+                        <div className={styles.side} >
+                            { 
+                            isLoading ?
+                            <IconButton disabled>
+                                <ArrowBackIosNewIcon/>
+                            </IconButton>
+                            :
+                            <IconButton onClick={downPage}>
+                                <ArrowBackIosNewIcon/>
+                            </IconButton>
+                            }
+                        </div>
+                        <div className={styles.center}>
+                            <IconButton onClick={bookMarkToggle}>
+                                <StarIcon style={{color : isbookMark ? "rgb(250, 175, 0)" : ""}}/>
+                            </IconButton>
+                        </div>
+                        <div className={styles.side}>
+                            {
+                            isLoading ?
+                            <IconButton disabled>
+                                <ArrowForwardIosIcon/>
+                            </IconButton>
+                            :
+                            <IconButton onClick={upPage}>
+                                <ArrowForwardIosIcon/>
+                            </IconButton>
+                            }
+                        </div>
+                    </div>
 
-            {
-                bookMarkList.map(data => 
-                    <ListItemButton
-                        onClick={() => setIndex(data.id)}
-                        key={data.id}
-                    >
-                        <ListItemText className="bookMark"  primary={data.answer} />
-                    </ListItemButton>
-                )
-            }
+                    <hr />
+                    
+                    <div className={styles.question}>
+                        <Textarea className={styles.title} value={question.title} readOnly disabled/>
+                        <Textarea value={question.content} readOnly disabled/>
+                        <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
+                        <Textarea className={styles.border} style={{visibility : isAnswer ? "" : "hidden"}} value={question.answer} readOnly disabled/>
+                    </div>
+    
+                </div>
 
-            </List>
-
-        </div>
+        </Container>
     )
 }
 

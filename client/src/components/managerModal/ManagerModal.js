@@ -107,7 +107,7 @@ function ManagerModal({ open, setOpen, question, setQuestion, getQuestions }) {
             <Box className="modal">
                 <FormControl>
                     <FormLabel>문제</FormLabel>
-                    <Textarea type="text" name="title" value={question.title} onChange={(e) => {onChange(e)}}/>
+                    <Textarea type="text" name="title" value={question.title} onChange={(e) => {onChange(e)}} autoFocus/>
                 </FormControl>
                 <FormControl>
                     <FormLabel>본문</FormLabel>

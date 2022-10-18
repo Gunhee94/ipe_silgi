@@ -50,7 +50,6 @@ app.get('/list/:id', (req, res) => {
 })
 
 app.post('/add', (req, res) => {
-    console.log(req.body.question, "바디")
 
     db.collection("count").findOne({name : "게시물갯수"}, (error, result) => {
 

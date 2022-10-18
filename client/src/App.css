@@ -2,20 +2,28 @@
   text-align: center;
 } */
 
-.container {
-  text-align:center;
-  height: 100%;
-  margin-top:30px;
+.page {
+  text-align: center;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+.page ul {
+  width: 30%;
+  min-width: 350px;
+  margin: auto;
+  text-align: center;
 }
 
 .filter {
-  width: 70%;
   margin: auto;
   text-align:right;
+  margin-top: 20px;
 }
 
 .filter div {
-  padding-right: 10px;
+  padding: 5px;
 }
 
 .modal {
@@ -24,12 +32,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
+  max-width: 400px;
+  min-width: 350px;
   background-color: white;
   border: 1px solid #000;
   box-shadow: 24;
   padding: 20px;
   max-height: 450px;
-  overflow: auto
+  overflow: auto;
 }
 
 .btn {
@@ -38,7 +48,6 @@
 
 .box {
   border: 1px solid black;
-  width: 70%;
   margin: auto;
   margin-top: 10px;
   text-align: left;

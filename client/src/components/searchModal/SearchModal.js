@@ -106,7 +106,7 @@ function SearchModal({ setIndex, questions }) {
               filterData.map(data => 
                 <ListItemButton
                   selected={selectedIndex === data._id}
-                  onClick={(e) => handleListItemClick(data._id)}
+                  onClick={() => handleListItemClick(data._id)}
                   key={data._id}
                 >
                   <ListItemText className="bookMark" primary={data.answer} />

@@ -1,20 +1,28 @@
 .detail {
     border: 1px solid black;
-    width: 70%;
-    margin: auto;
-    margin-left: 7%;
-    padding: 20px;
+    width: 100%;
     text-align:left;
     float:left;
 }
 
+.top {
+    margin-top: 10px;
+}
+
 .side {
     width:25%;
+    text-align: center;
+    float: left;
 }
 
 .center {
     width:50%;
-    float: center;
+    text-align: center;
+    float: left;
+}
+
+.question {
+    padding: 15px;
 }
 
 .detail .title {
@@ -23,7 +31,6 @@
 }
 
 .detail div {
-    margin-top: 10px;
     margin-bottom: 10px;
 }
 

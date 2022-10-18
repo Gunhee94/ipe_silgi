@@ -1,7 +1,8 @@
 # 문제
 
 [사이트바로가기](https://ipe-silgi.du.r.appspot.com)
-![image](https://user-images.githubusercontent.com/60492505/193982881-d06adea9-b094-41ab-80ba-1514438dd706.png)
+![image](https://user-images.githubusercontent.com/60492505/196338233-f4e56926-2256-4417-adac-e4caaaba8406.png)
+![image](https://user-images.githubusercontent.com/60492505/196338503-d08b9b35-b192-4fa9-b897-a7377ea5083d.png)
 
 ## 목적
 

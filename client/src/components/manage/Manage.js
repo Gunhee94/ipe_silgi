@@ -90,10 +90,12 @@ function Manage() {
                 )
             }
 
-            <div className="page">
-                <Pagination count={totalPage} color="primary" page={page} onChange={(e, v)=> {setPage(v)}} />
-            </div>
-
+            {
+                questions.length > 0 &&
+                <div className="page">
+                    <Pagination count={totalPage} color="primary" page={page} onChange={(e, v)=> {setPage(v)}} />
+                </div>
+            }
            <ManagerModal open={open} 
                          setOpen={setOpen} 
                          question={question}

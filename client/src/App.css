@@ -3,17 +3,16 @@
 } */
 
 .page {
-  text-align: center;
-  margin: auto;
   margin-top: 15px;
   margin-bottom: 50px;
 }
 
+.page nav {
+  display : flex;
+}
+
 .page ul {
-  width: 30%;
-  min-width: 350px;
   margin: auto;
-  text-align: center;
 }
 
 .filter {

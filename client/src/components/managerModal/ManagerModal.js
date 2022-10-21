@@ -98,7 +98,7 @@ function ManagerModal({ open, setOpen, question, setQuestion, getQuestions }) {
         let bookMark = localStorage.getItem("bookMark");
         bookMark = JSON.parse(bookMark);
         const index = bookMark.findIndex(data => data.id === question._id);
-        bookMark.splice(index, 1);
+        index != -1 && bookMark.splice(index, 1);
         localStorage.setItem("bookMark", JSON.stringify(bookMark));
     }
 

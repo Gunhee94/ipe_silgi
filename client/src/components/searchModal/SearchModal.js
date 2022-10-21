@@ -83,7 +83,7 @@ function SearchModal({ setIndex, questions }) {
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          onClick={() => {setOpen(true)}}
+          onClick={() => {setOpen(true); setFilterData([])}}
           readOnly
         />
       </Search>

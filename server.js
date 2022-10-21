@@ -25,14 +25,6 @@ app.get('/list', (req, res) => {
     });
 })
 
-app.get('/count', (req, res) => {
-    db.collection("count").findOne({name : "게시물갯수"}, (error, result) => {
-        if(error) {return console.log(error)}
-        res.json({count : result.totalPost})
-    });
-})
-
-
 app.get('/list/:id', (req, res) => {
 
     db.collection("questions").find().toArray((error, result) => {

@@ -1,35 +1,18 @@
 import Button from '@mui/material/Button';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ManagerModal from '../managerModal/ManagerModal';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 
-function Manage() {
+function Manage({ questions, getQuestions }) {
 
-    const [questions, setQuestions] = useState([]);
     const [open, setOpen] = useState(false);
     const [question, setQuestion] = useState({});
     const [alignment, setAlignment] = useState("basic");
-    const [totalPage, setTotalPage] = useState(0);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * 10;
-
-    useEffect(() => {
-        getQuestions();
-     }, [])
- 
-    const getQuestions = () => {
-        fetch("/list")
-        .then(res => res.json())
-        .then(data => {
-            setQuestions(data.questions);
-            data.questions.length >= 10 ? setTotalPage(Math.ceil(data.questions.length / 10)) : setTotalPage(1);
-            handleChange("basic");
-            
-        });
-    }
 
     const getQuestion = (id) => {
         setOpen(true)
@@ -93,7 +76,11 @@ function Manage() {
             {
                 questions.length > 0 &&
                 <div className="page">
-                    <Pagination count={totalPage} color="primary" page={page} onChange={(e, v)=> {setPage(v)}} />
+                    <Pagination count={questions.length >= 10 ? Math.ceil(questions.length / 10) : 1}
+                                color="primary" 
+                                page={page} 
+                                onChange={(e, v)=> {setPage(v)}} 
+                    />
                 </div>
             }
            <ManagerModal open={open} 

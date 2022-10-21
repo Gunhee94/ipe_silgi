@@ -51,7 +51,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={ <Detail index={index} setIndex={setIndex} questions={questions} /> }/>
-        <Route path='/manage' element={ <Manage /> }/>
+        <Route path='/manage' element={ <Manage questions={questions} getQuestions={getQuestions}/> }/>
         <Route path='*' element={ <div></div> }/>
       </Routes>
 

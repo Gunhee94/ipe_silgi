@@ -119,7 +119,7 @@ function Detail ({ index, setIndex, questions }) {
         <Container>
 
             <div className='filter'>
-                <FormControl sx={{ minWidth: 200 }}>
+                <FormControl sx={{ minWidth: 200 }} size="small">
                     <InputLabel>북마크목록</InputLabel>
                     <Select label="북마크목록" MenuProps={MenuProps} value={''}
                     >
@@ -138,50 +138,50 @@ function Detail ({ index, setIndex, questions }) {
                 </FormControl>
             </div>
 
-                <div className={styles.detail}>
-                    
-                    <div className={styles.top}>
-                        <div className={styles.side} >
-                            { 
-                            isLoading ?
-                            <IconButton disabled>
-                                <ArrowBackIosNewIcon/>
-                            </IconButton>
-                            :
-                            <IconButton onClick={downPage}>
-                                <ArrowBackIosNewIcon/>
-                            </IconButton>
-                            }
-                        </div>
-                        <div className={styles.center}>
-                            <IconButton onClick={bookMarkToggle}>
-                                <StarIcon style={{color : isbookMark ? "rgb(250, 175, 0)" : ""}}/>
-                            </IconButton>
-                        </div>
-                        <div className={styles.side}>
-                            {
-                            isLoading ?
-                            <IconButton disabled>
-                                <ArrowForwardIosIcon/>
-                            </IconButton>
-                            :
-                            <IconButton onClick={upPage}>
-                                <ArrowForwardIosIcon/>
-                            </IconButton>
-                            }
-                        </div>
+            <div className={styles.detail}>
+                
+                <div className={styles.top}>
+                    <div className={styles.side} >
+                        { 
+                        isLoading ?
+                        <IconButton disabled>
+                            <ArrowBackIosNewIcon/>
+                        </IconButton>
+                        :
+                        <IconButton onClick={downPage}>
+                            <ArrowBackIosNewIcon/>
+                        </IconButton>
+                        }
                     </div>
-
-                    <hr />
-                    
-                    <div className={styles.question}>
-                        <Textarea className={styles.title} value={question.title} readOnly disabled/>
-                        <Textarea value={question.content} readOnly disabled/>
-                        <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
-                        <Textarea className={styles.border} style={{visibility : isAnswer ? "" : "hidden"}} value={question.answer} readOnly disabled/>
+                    <div className={styles.center}>
+                        <IconButton onClick={bookMarkToggle}>
+                            <StarIcon style={{color : isbookMark ? "rgb(250, 175, 0)" : ""}}/>
+                        </IconButton>
                     </div>
-    
+                    <div className={styles.side}>
+                        {
+                        isLoading ?
+                        <IconButton disabled>
+                            <ArrowForwardIosIcon/>
+                        </IconButton>
+                        :
+                        <IconButton onClick={upPage}>
+                            <ArrowForwardIosIcon/>
+                        </IconButton>
+                        }
+                    </div>
                 </div>
+
+                <hr />
+                
+                <div className={styles.question}>
+                    <Textarea className={styles.title} value={question.title} readOnly disabled/>
+                    <Textarea value={question.content} readOnly disabled/>
+                    <Button variant="contained" onClick={()=>{setIsAnswer(!isAnswer)}}>정답보기</Button>
+                    <Textarea className={styles.answer} style={{visibility : isAnswer ? "" : "hidden"}}value={question.answer} readOnly disabled/>
+                </div>
+
+            </div>
 
         </Container>
     )

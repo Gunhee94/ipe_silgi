@@ -1,8 +1,14 @@
 .detail {
-    border: 1px solid black;
+    border: 1px solid lightgrey;
     width: 100%;
     text-align:left;
     float:left;
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+hr {
+    border: 0.5px solid lightgrey;
 }
 
 .top {
@@ -34,6 +40,6 @@
     margin-bottom: 10px;
 }
 
-.detail .border {
+.detail .answer {
     border: none;
 }

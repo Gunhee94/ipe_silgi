@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Detail from './components/detail/Detail';
 import Manage from './components/manage/Manage';
 import SearchModal from './components/searchModal/SearchModal';
+import Test from './components/test/Test';
 
 function App() {
 
@@ -38,8 +39,11 @@ function App() {
             <Typography variant="h6" component="div" sx={{ mr: 3, cursor: "pointer" }} onClick={()=> {navigate('/')}}>
               문제
             </Typography>
-            <Typography variant="h7" component="div" sx={{ flexGrow: 1, cursor: "pointer" }} onClick={()=> {navigate('/manage')}}>
+            <Typography variant="h7" component="div" sx={{ mr: 3, cursor: "pointer" }} onClick={()=> {navigate('/manage')}}>
               문제관리
+            </Typography>
+            <Typography variant="h7" component="div" sx={{ flexGrow: 1, cursor: "pointer" }} onClick={()=> {navigate('/test')}}>
+              테스트
             </Typography>
           
             <SearchModal setIndex={setIndex} questions={questions}/>
@@ -52,6 +56,7 @@ function App() {
       <Routes>
         <Route path='/' element={ <Detail index={index} setIndex={setIndex} questions={questions} /> }/>
         <Route path='/manage' element={ <Manage questions={questions} getQuestions={getQuestions}/> }/>
+        <Route path='/test' element={ <Test /> }/>
         <Route path='*' element={ <div></div> }/>
       </Routes>
 

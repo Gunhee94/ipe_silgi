@@ -57,7 +57,7 @@ function Manage({ questions, getQuestions }) {
                     <ToggleButton value="new">새로운문제순</ToggleButton>
                 </ToggleButtonGroup>
 
-                <Button variant="contained" onClick={() => {getQuestion()}}>문제등록</Button>
+                <Button variant="contained" onClick={() => {getQuestion()}} className='btn'>문제등록</Button>
             </div>
 
             {

@@ -19,10 +19,15 @@
   margin: auto;
   text-align:right;
   margin-top: 20px;
+  margin-bottom: 7px;
 }
 
 .filter div {
-  padding: 5px;
+  background-color: white;
+}
+
+.filter .btn {
+  margin-left: 5px;
 }
 
 .modal {
@@ -41,12 +46,16 @@
   overflow: auto;
 }
 
+.modal div {
+  margin-bottom: 5px;
+}
+
 .btn {
   float: right;
 }
 
 .box {
-  border: 1px solid black;
+  border: 1px solid lightgrey;
   margin: auto;
   margin-top: 10px;
   text-align: left;
@@ -55,6 +64,8 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space:nowrap;
+  background-color: white;
+  border-radius: 5px 5px 5px 5px;
 }
 
 .box:hover {
